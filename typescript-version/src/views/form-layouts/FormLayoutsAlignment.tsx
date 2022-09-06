@@ -21,6 +21,8 @@ import FormControlLabel from '@mui/material/FormControlLabel'
 // ** Icons Imports
 import EyeOutline from 'mdi-material-ui/EyeOutline'
 import EyeOffOutline from 'mdi-material-ui/EyeOffOutline'
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
 
 interface State {
   password: string
@@ -55,7 +57,7 @@ const FormLayoutsAlignment = () => {
 
   return (
     <Card>
-      <CardHeader title='Form Alignment' titleTypographyProps={{ variant: 'h6' }} />
+      <CardHeader title='Forensics 8p '  titleTypographyProps={{ variant: 'h6' }} />
       <CardContent sx={{ minHeight: 500, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <Form onSubmit={e => e.preventDefault()}>
           <Grid container spacing={5}>
@@ -63,42 +65,32 @@ const FormLayoutsAlignment = () => {
               <Typography variant='h5'>Sign In</Typography>
             </Grid>
             <Grid item xs={12}>
-              <TextField fullWidth label='Username' placeholder='carterLeonard' />
+              <TextField fullWidth label='Name' placeholder='Phillip McJavascript' />
             </Grid>
             <Grid item xs={12}>
+              <TextField fullWidth label='UUID' placeholder='123456' />
+            </Grid>
+            <Grid item xs={12} sm={6}>
               <FormControl fullWidth>
-                <InputLabel htmlFor='form-layouts-alignment-password'>Password</InputLabel>
-                <OutlinedInput
-                  label='Password'
-                  value={values.password}
-                  onChange={handleChange('password')}
-                  id='form-layouts-alignment-password'
-                  type={values.showPassword ? 'text' : 'password'}
-                  endAdornment={
-                    <InputAdornment position='end'>
-                      <IconButton
-                        edge='end'
-                        onClick={handleClickShowPassword}
-                        onMouseDown={handleMouseDownPassword}
-                        aria-label='toggle password visibility'
-                      >
-                        {values.showPassword ? <EyeOutline /> : <EyeOffOutline />}
-                      </IconButton>
-                    </InputAdornment>
-                  }
-                />
+                <InputLabel id='eventname-label'>Event</InputLabel>
+                <Select
+                  label='Event'
+                  defaultValue=''
+                  id='eventname'
+                  labelId='eventname-label'
+                >
+                  <MenuItem value='LD'>LD</MenuItem>
+                  <MenuItem value='Policy'>Policy</MenuItem>
+                  <MenuItem value='PF'>PF</MenuItem>
+                  <MenuItem value='Parli'>Parli</MenuItem>
+                  <MenuItem value='Parli'>Speech</MenuItem>
+
+                </Select>
               </FormControl>
             </Grid>
             <Grid item xs={12}>
-              <FormControlLabel
-                label='Remember me'
-                control={<Checkbox name='form-layouts-alignment-checkbox' />}
-                sx={{ '& .MuiButtonBase-root': { paddingTop: 0, paddingBottom: 0 } }}
-              />
-            </Grid>
-            <Grid item xs={12}>
               <Button size='large' type='submit' variant='contained' sx={{ width: '100%' }}>
-                Login
+                Submit
               </Button>
             </Grid>
           </Grid>

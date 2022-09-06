@@ -21,7 +21,7 @@ import NotificationDropdown from 'src/@core/layouts/components/shared-components
 interface Props {
   hidden: boolean
   settings: Settings
-  toggleNavVisibility: () => void
+  toggleNavVisibility: () => true
   saveSettings: (values: Settings) => void
 }
 
