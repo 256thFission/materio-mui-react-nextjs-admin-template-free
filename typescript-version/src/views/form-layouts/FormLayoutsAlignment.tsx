@@ -24,6 +24,11 @@ import EyeOffOutline from 'mdi-material-ui/EyeOffOutline'
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 
+import TaskService from 'src/service/task.services';
+import {addDoc, collection,Timestamp} from "firebase/firestore";
+import {db} from "../../firebase-config";
+import firebase from "firebase/compat/app";
+
 interface State {
   password: string
   showPassword: boolean
@@ -44,31 +49,66 @@ const FormLayoutsAlignment = () => {
     showPassword: false
   })
 
-  // Handle Password
-  const handleChange = (prop: keyof State) => (event: ChangeEvent<HTMLInputElement>) => {
-    setValues({ ...values, [prop]: event.target.value })
+  const [Name, setName] = useState("");
+  const [UUID, setUUID] = useState("");
+  const [Catagory, setCatagory] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const myentry = {
+     Name,Time, Catagory, UUID,
+    }
+    console.log(Name, UUID)
+    const current = new Date();
+    const Time = `${current.getDate()}/${current.getMonth() + 1}/${current.getFullYear()}`;
+    try {
+      await addDoc(collection(db, 'attendance'), {
+        PerName: Name,
+        UUID: UUID,
+        Date: Time
+      });
+
+    } catch (err) {
+      console.log(err);
+
+return;
+    }
+  };
+
+
+  const onNameChange = (e) => {
+   console.log('Typed => $(e.target.value)')
+    setName(e.target.value);
   }
-  const handleClickShowPassword = () => {
-    setValues({ ...values, showPassword: !values.showPassword })
-  }
-  const handleMouseDownPassword = (event: MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault()
+  const onUUIDChange = (e) => {
+    console.log('Typed => $(e.target.value)')
+    setUUID(e.target.value);
   }
 
   return (
     <Card>
       <CardHeader title='Forensics 8p '  titleTypographyProps={{ variant: 'h6' }} />
       <CardContent sx={{ minHeight: 500, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <Form onSubmit={e => e.preventDefault()}>
+        <Form onSubmit={handleSubmit}>
           <Grid container spacing={5}>
             <Grid item xs={12}>
               <Typography variant='h5'>Sign In</Typography>
             </Grid>
             <Grid item xs={12}>
-              <TextField fullWidth label='Name' placeholder='Phillip McJavascript' />
+              <TextField fullWidth
+                         label='Name'
+                         onChange={onNameChange}
+                         value={Name}
+                         placeholder='Phillip McJavascript' />
             </Grid>
             <Grid item xs={12}>
-              <TextField fullWidth label='UUID' placeholder='123456' />
+              <TextField fullWidth label='UUID'
+                         placeholder='123456'
+                         value={UUID}
+                         onChange={onUUIDChange}
+              />
+
+
             </Grid>
             <Grid item xs={12} sm={6}>
               <FormControl fullWidth>
